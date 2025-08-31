@@ -28,11 +28,11 @@ ShopX is a modern, responsive **electronics shopping** platform built with **HTM
 
 **UI/UX Highlights:**
 
-Glassmorphism-inspired header & hero section
+👉Glassmorphism-inspired header & hero section
 
-Flexible grid-based layout for product cards
+👉Flexible grid-based layout for product cards
 
-Smooth, minimalistic buttons and action elements
+👉Smooth, minimalistic buttons and action elements
 
 # 🎯 Learning Outcomes
 
@@ -64,10 +64,10 @@ This project is **perfect for demonstrating front-end development skills**, show
 
 # 🔥 Future Enhancements:
 
-**Backend Integration** with Node.js / Firebase
+**1.Backend Integration** with Node.js / Firebase
 
-**Payment Gateway Simulation**
+**2.Payment Gateway Simulation**
 
-**Product Filters & Sorting**
+**3.Product Filters & Sorting**
 
-**Authentication System**
+**4.Authentication System**
