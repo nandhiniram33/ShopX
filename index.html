@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ShopX — Electronics Superstore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#ff4d00;
+      --dark:#0f1220;
+      --light:#ffffff;
+      --muted:#f4f6fa;
+      --text:#1f2633;
+      --shadow: 0 8px 24px rgba(0,0,0,.12);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:#fff;
+      line-height:1.5;
+    }
+    /* Header */
+    .header{
+      position:sticky; top:0; z-index:50;
+      background:rgba(255,255,255,.85);
+      backdrop-filter: blur(8px);
+      border-bottom:1px solid #eaeef5;
+    }
+    .container{max-width:1200px; margin:0 auto; padding:0 16px;}
+    .nav{
+      display:flex; align-items:center; gap:16px; padding:12px 0;
+    }
+    .logo{
+      display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;
+    }
+    .logo-badge{
+      width:40px; height:40px; border-radius:50%;
+      display:grid; place-items:center;
+      background:#fff; color:var(--brand);
+      border:2px solid var(--brand); font-weight:800; box-shadow:var(--shadow);
+    }
+    .logo-text{font-weight:800; letter-spacing:.5px; font-size:1.1rem}
+    .nav-links{
+      display:flex; gap:12px; margin-left:8px;
+    }
+    .nav-links a{
+      text-decoration:none; color:#445064; padding:8px 12px; border-radius:10px;
+    }
+    .nav-links a:hover{background:var(--muted); color:#111827}
+    .search{
+      margin-left:auto; display:flex; gap:8px; align-items:center;
+      flex:1; max-width:520px;
+    }
+    .search input{
+      width:100%; padding:10px 12px; border:1px solid #e6eaf1; border-radius:12px;
+      outline:none;
+    }
+    .search button{
+      padding:10px 14px; border:none; background:var(--brand); color:#fff; border-radius:12px; cursor:pointer;
+    }
+    .actions{display:flex; gap:10px; margin-left:8px;}
+    .icon-btn{
+      padding:10px 12px; border-radius:12px; border:1px solid #e6eaf1; background:#fff; cursor:pointer;
+      display:flex; align-items:center; gap:8px; text-decoration:none; color:#111827;
+    }
+    .badge{
+      background:var(--brand); color:#fff; padding:2px 8px; border-radius:999px; font-size:.75rem;
+    }
+    /* Hero */
+    .hero{
+      position:relative; overflow:hidden; border-bottom:1px solid #eaeef5;
+      background: #0b1020;
+      color:#fff;
+    }
+    .hero-inner{
+      display:grid; grid-template-columns:1.2fr .8fr; gap:20px; align-items:center;
+      min-height:400px; padding:36px 0;
+    }
+    .hero h1{font-size:2.2rem; line-height:1.15; margin:0 0 10px}
+    .hero p{opacity:.9; margin:0 0 16px}
+    .hero-cta{display:flex; gap:10px}
+    .btn{
+      padding:12px 16px; border-radius:12px; border:none; cursor:pointer; font-weight:600;
+      text-decoration:none; display:inline-block;
+    }
+    .btn-primary{background:var(--brand); color:#fff}
+    .btn-ghost{background:transparent; color:#fff; border:1px solid rgba(255,255,255,.25)}
+    .hero-art{
+      position:relative; min-height:280px; border-radius:20px; overflow:hidden; box-shadow:var(--shadow);
+      background:
+        url("https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=1600&auto=format&fit=crop") center/cover no-repeat,
+        radial-gradient(1200px 400px at 20% -20%, rgba(255,77,0,.35), transparent 60%);
+      outline:1px solid rgba(255,255,255,.08);
+    }
+    /* Sections */
+    .section{padding:32px 0}
+    .section h2{margin:0 0 14px}
+    .grid{
+      display:grid; gap:16px;
+      grid-template-columns:repeat(12,1fr);
+    }
+    .card{
+      grid-column: span 4;
+      background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; border:1px solid #eef1f7;
+      display:flex; flex-direction:column;
+    }
+    .card img{width:100%; height:auto; object-fit:cover;border-radius:8px;display:block}
+    .card-body{padding:14px}
+    .price{font-weight:800}
+    .pill{font-size:.75rem; padding:4px 10px; border-radius:999px; background:var(--muted); color:#445064}
+    .row{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:8px}
+    .small{font-size:.9rem; color:#5b6375}
+    .add{padding:10px 12px; border:none; background:#111827; color:#fff; border-radius:10px; cursor:pointer}
+    /* Footer */
+    footer{padding:28px 0; border-top:1px solid #eaeef5; color:#57607a; font-size:.95rem;text-align: center;}
+    /* Responsive */
+    @media (max-width:960px){
+      .hero-inner{grid-template-columns:1fr; padding:24px 0}
+      .card{grid-column: span 4;}
+      .search{max-width:none}
+      .nav-links{display:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="#" class="logo" aria-label="ShopX Home">
+          <div class="logo-badge">SX</div>
+          <div class="logo-text">ShopX</div>
+        </a>
+
+        <div class="nav-links" role="navigation" aria-label="Primary">
+          <a href="#smartphones">Smartphones</a>
+          <a href="#laptops">Laptops</a>
+          <a href="#deals">Deals</a>
+        </div>
+
+        <form class="search" onsubmit="event.preventDefault(); alert('Searching: '+ this.q.value)">
+          <input name="q" type="search" placeholder="Search smartphones, laptops, accessories..." aria-label="Search ShopX"/>
+          <button type="submit" aria-label="Search">Search</button>
+        </form>
+
+<div class="actions">
+  <a class="icon-btn" href="account.html" aria-label="Account">
+    👤 <span class="small">Account</span>
+  </a>
+
+
+          <a class="icon-btn" href="cart.html" aria-label="Cart">
+            🛒 <span class="small">Cart</span> <span class="badge" id="cartCount">2</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <h1>India’s Biggest Electronics Store</h1>
+        <p>ShopX brings you the latest <strong>smartphones</strong> and <strong>laptops</strong> at unbeatable prices. Fast delivery, easy returns, trusted warranty.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#smartphones">Shop Smartphones</a>
+          <a class="btn btn-ghost" href="#laptops">Browse Laptops</a>
+        </div>
+      </div>
+      <div class="hero-art" title="Electronics background image"></div>
+    </div>
+  </section>
+
+  <!-- Smartphones -->
+  <section id="smartphones" class="section">
+    <div class="container">
+      <h2>Smartphones</h2>
+      <p class="small">Top picks hand-picked for you</p>
+      <div class="grid">
+        <!-- Phone 1 -->
+        <article class="card">
+          <img src="Vivo-T3x-5G-1.png" alt="Smartphone premium model">
+          <div class="card-body">
+            <div class="row">
+              <strong>Vivo T3x 5G</strong>
+              <span class="pill">6GB · 128GB</span>
+            </div>
+            <div class="row">
+              <span class="small">5G · Snapdragon 6 Gen 1 · 6000mAh</span>
+              <span class="price">₹15,499</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Vivo T3x 5G')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Vivo T3x 5G')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Phone 2 -->
+        <article class="card">
+          <img src="iphone.png" alt="Smartphone budget model">
+          <div class="card-body">
+            <div class="row">
+              <strong>iPhone 15</strong>
+              <span class="pill">6GB · 128GB</span>
+            </div>
+            <div class="row">
+              <span class="small">5G · A16 Bionic · 3349mAh</span>
+              <span class="price">₹62,999</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('iPhone 15')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('iPhone 15')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+       <!-- Phone 3 -->
+        <article class="card">
+          <img src="Samsung Z fold y.png" alt="Smartphone premium model">
+          <div class="card-body">
+            <div class="row">
+              <strong>Samsung Z Fold Y</strong>
+              <span class="pill">16GB · 256GB</span>
+            </div>
+            <div class="row">
+              <span class="small">5G · Snapdragon 120Hz · 4400mAh</span>
+              <span class="price">₹1,74,999.</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Samsung Z Fold Y')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Samsung Z Fold Y')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+               <!-- Phone 4 -->
+        <article class="card">
+          <img src="Oppo6.png" alt="Smartphone premium model">
+          <div class="card-body">
+            <div class="row">
+              <strong>Oppo Reno6</strong>
+              <span class="pill">12GB · 256GB</span>
+            </div>
+            <div class="row">
+              <span class="small">5G · MediaTek Dimensity · 4300mAh</span>
+              <span class="price">₹22,999</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Oppo Reno6')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Oppo Reno6')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+               <!-- Phone 5 -->
+        <article class="card">
+          <img src="Realme GT 7 Pro.png" alt="Smartphone premium model">
+          <div class="card-body">
+            <div class="row">
+              <strong>Realme GT 7Pro</strong>
+              <span class="pill">12GB · 256GB</span>
+            </div>
+            <div class="row">
+              <span class="small">5G · Snapdragon 8Elite · 65000mAh</span>
+              <span class="price">₹48,499</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Realme GT 7Pro')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Realme GT 7Pro')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+               <!-- Phone 6 -->
+        <article class="card">
+          <img src="Tecno Camon 20.png" alt="Smartphone premium model">
+          <div class="card-body">
+            <div class="row">
+              <strong>Tecno Camon 20</strong>
+              <span class="pill">8GB · 256GB</span>
+            </div>
+            <div class="row">
+              <span class="small">4G · MediaTek Helio · 5000mAh</span>
+              <span class="price">₹8,999</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Tecno Camon 20')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Tecno Camon 20')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+
+               <!-- Phone 7 -->
+        <article class="card">
+          <img src="Nothing Phone (2a) Plus 8.png" alt="Smartphone premium model">
+          <div class="card-body">
+            <div class="row">
+              <strong>Nothing Phone (2a) Plus 8</strong>
+              <span class="pill">8GB · 256GB</span>
+            </div>
+            <div class="row">
+              <span class="small">5G · Android 14 · 5000mAh</span>
+              <span class="price">₹20,499</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Nothing Phone (2a) Plus 8')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Nothing Phone (2a) Plus 8')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+               <!-- Phone 8 -->
+        <article class="card">
+          <img src="OnePlus 11.png" alt="Smartphone premium model">
+          <div class="card-body">
+            <div class="row">
+              <strong>OnePlus 11</strong>
+              <span class="pill">16GB · 256GB</span>
+            </div>
+            <div class="row">
+              <span class="small">5G · Snapdragon-OxygenOS · 5000mAh</span>
+              <span class="price">₹61,999</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('OnePlus 11<')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('OnePlus 11<')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+               <!-- Phone 9 -->
+        <article class="card">
+          <img src="Infinix hot 40i.png" alt="Smartphone premium model">
+          <div class="card-body">
+            <div class="row">
+              <strong>Infinix hot 40i </strong>
+              <span class="pill">8GB · 256GB</span>
+            </div>
+            <div class="row">
+              <span class="small">5G · MediaTek Helio · 5000mAh</span>
+              <span class="price">₹9,999</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Infinix hot 40i ')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Infinix hot 40i ')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+               <!-- Phone 10 -->
+        <article class="card">
+          <img src="Vivo X.png" alt="Smartphone premium model">
+          <div class="card-body">
+            <div class="row">
+              <strong>Vivo X Series X200 FE</strong>
+              <span class="pill">16GB · 512GB</span>
+            </div>
+            <div class="row">
+              <span class="small">50MP · MediaTek Dimensity 9300+ · 6500mAh</span>
+              <span class="price">₹59,999</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Vivo X Series X200 FE')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Vivo X Series X200 FE')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+        </div>
+    </div>
+  </section>
+
+
+  <!-- Laptops -->
+  <section id="laptops" class="section" style="background:var(--muted)">
+    <div class="container">
+      <h2>Laptops</h2>
+      <p class="small">Work, play, and everything in between</p>
+      <div class="grid">
+        <!-- Laptop 1 -->
+        <article class="card">
+          <img src="Hp15.png" alt="Ultrabook laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>HP 15</strong>
+              <span class="pill">Intel Core Ultra 5-125H · 16GB · 512GB SSD</span>
+            </div>
+            <div class="row">
+              <span class="small">60Hz · Intel Arc Graphics</span>
+              <span class="price">₹69,990</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('HP 15')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('HP 15')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Laptop 2 -->
+        <article class="card">
+          <img src="Dell Inspiron.png" alt="Gaming laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>Dell Inspiron 15</strong>
+              <span class="pill">Intel® Core™ i3-1305U · 16GB · 512GB</span>
+            </div>
+            <div class="row">
+              <span class="small">60Hz ·  Intel® Core™ i3-1305U</span>
+              <span class="price">₹37,188</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Inspiron 15 Laptop')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Inspiron 15 Laptop')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+ <!-- Laptop 3 -->
+        <article class="card">
+          <img src="Samsung Galaxy Book.png" alt="Gaming laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>Samsung Galaxy Book$</strong>
+              <span class="pill">Intel Core 5 120U · 16GB · 512GB SSD</span>
+            </div>
+            <div class="row">
+              <span class="small">60Hz · Intel Iris XE Graphics</span>
+              <span class="price">₹52,990</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Samsung Galaxy Book4')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Samsung Galaxy Book4')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+         <!-- Laptop 4 -->
+        <article class="card">
+          <img src="Asus Vivobook.png" alt="Gaming laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>ASUS Vivobook 15</strong>
+              <span class="pill">Core i5 · 16GB · 512GB SSD</span>
+            </div>
+            <div class="row">
+              <span class="small">60Hz · Intel UHD Graphics</span>
+              <span class="price">₹55,500</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('ASUS Vivobook 15')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('ASUS Vivobook 15')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+         <!-- Laptop 5 -->
+        <article class="card">
+          <img src="Lenovo V14.png" alt="Gaming laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>Lenovo 14 </strong>
+              <span class="pill">Intel Core i7 · 16GB · 512 GB SSD</span>
+            </div>
+            <div class="row">
+              <span class="small">165Hz · Intel Iris Xe Graphics</span>
+              <span class="price">₹49,990</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Lenovo 14 ')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Lenovo 14 ')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+         <!-- Laptop 6 -->
+        <article class="card">
+          <img src="Acer Aspire 3.png" alt="Gaming laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>Acer Aspire 3</strong>
+              <span class="pill">Intel Celeron N4500 · 16GB · 256GB</span>
+            </div>
+            <div class="row">
+              <span class="small">60 ·Graphics Intel HD Graphics 620.</span>
+              <span class="price">₹17,990</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Acer Aspire 3')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Acer Aspire 3')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+         <!-- Laptop 7 -->
+        <article class="card">
+          <img src="Hp.png" alt="Gaming laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>HP</strong>
+              <span class="pill">Ryzen 7 · 16GB · 512GB</span>
+            </div>
+            <div class="row">
+              <span class="small">60Hz · AMD Radeon™ Graphics </span>
+              <span class="price">₹58,590</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('HP')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('HP')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+         <!-- Laptop 8 -->
+        <article class="card">
+          <img src="Laptop victus.png" alt="Gaming laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>Hp Victus</strong>
+              <span class="pill">AMD Ryzen 5 · 16GB · 512GB</span>
+            </div>
+            <div class="row">
+              <span class="small">60Hz · Gaming</span>
+              <span class="price">₹56,699</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('HP Victus')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('HP Victus')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+         <!-- Laptop 9 -->
+        <article class="card">
+          <img src="Lenova V15.png" alt="Gaming laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>Lenovo V15</strong>
+              <span class="pill">AMD Ryzen 5 7520U · 16GB · 512GB</span>
+            </div>
+            <div class="row">
+              <span class="small">65Hz · Vapor cooling</span>
+              <span class="price">₹36,750</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Lenovo V15')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Lenovo V15')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+         <!-- Laptop 10 -->
+        <article class="card">
+          <img src="Apple MacBook Pro M4.png" alt="Gaming laptop">
+          <div class="card-body">
+            <div class="row">
+              <strong>Apple MacBook Pro M4</strong>
+              <span class="pill">Ryzen 7 · 16GB · 1TB</span>
+            </div>
+            <div class="row">
+              <span class="small">165Hz · Apple Intelligence</span>
+              <span class="price">₹1,19,990</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Apple MacBook Pro M4')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Apple MacBook Pro M4')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Deals -->
+  <section id="deals" class="section">
+    <div class="container">
+      <h2>Today’s Deals</h2>
+      <div class="grid">
+        <article class="card">
+          <img src="Charger.png" alt="Accessory bundle">
+          <div class="card-body">
+            <div class="row">
+              <strong>Charger</strong>
+              <span class="pill">AC Adapter•	110 V AC</span>
+            </div>
+            <div class="row">
+              <span class="small">Save 40% with combo</span>
+              <span class="price">₹1,199</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Charger')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Charger')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+<article class="card">
+          <img src="Cable.png" alt="Accessory bundle">
+          <div class="card-body">
+            <div class="row">
+              <strong>Cable</strong>
+              <span class="pill">Apple iPhone 7G</span>
+            </div>
+            <div class="row">
+              <span class="small">Save 40% with combo</span>
+              <span class="price">₹1,299</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Cable')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Cable')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+<article class="card">
+          <img src="Power Bank.png" alt="Accessory bundle">
+          <div class="card-body">
+            <div class="row">
+              <strong>Power Bank</strong>
+              <span class="pill"> Apple Compatible • 10000 mAh</span>
+            </div>
+            <div class="row">
+              <span class="small">Save 40% with combo</span>
+              <span class="price">₹1,199</span>
+            </div>
+            <div class="row">
+              <button class="add" onclick="addToCart('Power Bank')">Add to Cart</button>
+              <button class="icon-btn" onclick="addToWishlist('Power Bank')">♡ Wishlist</button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © <span id="y"></span> ShopX · Fast shipping · Secure payments · 24×7 support
+    </div>
+  </footer>
+
+  <script>
+    // Lightweight demo cart/wishlist handlers (localStorage)
+    const CART_KEY = 'shopx_cart';
+    const WL_KEY = 'shopx_wishlist';
+    const y = document.getElementById('y'); y.textContent = new Date().getFullYear();
+
+    function getList(k){ try { return JSON.parse(localStorage.getItem(k)) || []; } catch { return []; } }
+    function setList(k,v){ localStorage.setItem(k, JSON.stringify(v)); updateBadge(); }
+
+    function addToCart(name){
+      const cart = getList(CART_KEY);
+      cart.push({ name, qty:1 });
+      setList(CART_KEY, cart);
+      alert(`Added to cart: ${name}`);
+    }
+    function addToWishlist(name){
+      const wl = getList(WL_KEY);
+      if(!wl.includes(name)) wl.push(name);
+      setList(WL_KEY, wl);
+      alert(`Saved to wishlist: ${name}`);
+    }
+    function updateBadge(){
+      const c = getList(CART_KEY).length;
+      const el = document.getElementById('cartCount');
+      if(el) el.textContent = c;
+    }
+    updateBadge();
+  </script>
+</body>
+</html>
